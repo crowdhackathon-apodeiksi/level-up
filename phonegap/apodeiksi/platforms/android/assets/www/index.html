@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+   
+        <script type="text/javascript" language="javascript">
+            // This event handler is fired once the AppMobi libraries are ready
+  /*         function onDeviceReady() {
+                //use AppMobi viewport to handle device resolution differences if you want
+               
+                //hide splash screen now that our app is ready to run
+                AppMobi.device.hideSplashScreen();
+                setTimeout(function(){
+                    $.ui.launch();
+                },50);
+            }*/
+
+            //initial event handler to detect when appMobi is ready to roll
+            document.addEventListener("appMobi.device.ready",onDeviceReady,false);
+        </script> 
+		<script src="cordova.js"></script>	
+        <script src="cordova_plugins.js"></script>			
+        <script src="js/appframework.ui.min.js"></script>
+
+        <script src="js/ajax.js"></script>
+		<script src="js/html-data-ajax.js"></script>		
+		<script src="js/custom.js"></script>
+		<script src="js/stats-ajax.js"></script>	
+		<script src="js/prosfores-ajax.js"></script>	
+		<script src="js/camera.js"></script>	
+		<script src="js/send-photo-ajax.js"></script>
+		<script src="js/apodeikseis-ajax.js"></script>	
+
+        <script>
+ /*           $.ui.autoLaunch=false;
+            $.ui.useOSThemes=false;
+            $.ui.blockPageScroll();
+            $(document).ready(function(){
+                if($.ui.useOSThemes&&!$.os.ios&&$("#afui").get(0).className!=="ios")
+                $("#afui").removeClass("ios");
+            });*/
+        </script>
+        <link href="css/icons.css" rel="stylesheet" type="text/css">
+        <link href="css/af.ui.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="afui" class='af'>
+          
+<div id="header">
+ <a id='menubadge' onclick='af.ui.toggleSideMenu()' class='menuButton'></a>
+ </div>
+          
+<div id="content">
+	          
+	<div class="panel" title="ΑΠΟΔΕΙΞΗ" data-nav="nav_0" id="page_0" selected="selected" data-appbuilder-object="page">
+
+		<div class="container" style="width: 100%; position: relative; z-index: 0;" data-appbuilder-object="container" data-position="static"></div>
+		
+		<form style="width: 100%;min-height: 50px;" data-appbuilder-object="form" data-position="static" class="">
+				
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Α.Φ.Μ.</label>
+				<input type="text" style="float:left;background-image: none; background-position: 0% 0%; background-repeat: repeat;" name="afm" id="afm" placeholder="">
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">ΑΑ απόδειξης</label>
+				<input type="text" style="float: left; background-image: none; background-position: 0% 0%; background-repeat: repeat;" id="aaapodeiksis" name="aaapodeiksis" placeholder="">
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Ημερομηνία</label>
+				<input type="date" style="float:left;" id="imerominia" name="imerominia" placeholder="">
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Ώρα</label>
+				<input type="time" style="float:left;" id="ora" name="ora" placeholder="">
+			</div>			
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Συνολική αξία</label>
+				<input type="text" style="float:left;" id="synolikiaksia" name="synolikiaksia" placeholder="">
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Αξία Φ.Π.Α.</label>
+				<input type="text" style="float:left;" id="aksiafpa" name="aksiafpa" placeholder="">
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label for="">Κατηγορία</label>
+				<input type="text" style="float:left;" list="katigories" id="katigoria" name="katigoria" placeholder="">
+					<datalist id="katigories">
+					</datalist>				
+			</div>
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label>Δημοσιοποίηση </label>
+					<input id="toggle1" style="float:left;" checked="" type="checkbox" name="dimosiopoiisi" value="ΟΧΙ" class="toggle">
+					<label for="toggle1" data-on="ΟΧΙ"  data-off="ΝΑΙ">
+				</label>
+			</div>			
+
+			<input type="hidden"  id="ccn" name="ccn" value="0">
+			<a class="button icon add" href="#" style="position: relative; z-index: 2;" data-appbuilder-object="button" data-transition="slide" onclick="return sendapodeiksi(); " id="">ΑΠΟΣΤΟΛΗ</a>
+			<button class="button icon error" type='reset' href="#" style="position: relative; z-index: 2;" data-appbuilder-object="button" data-transition="slide"  id="" value=''>ΕΚΚΑΘΑΡΙΣΗ</button>
+		</form>
+		<a class="button icon target" href="#" style="" data-appbuilder-object="button" data-position="static" data-transition="slide" onclick="return scan();"  id=""> ΣΑΡΩΣΗ </a>
+		<a class="button icon camera" href="#" style="" data-appbuilder-object="button" data-position="static" data-transition="slide" onclick="return capturePhoto();"  id=""> ΦΩΤΟΓΡΑΦΙΑ </a>
+		<div id="apodeiksi-yparchei" style="color:red"></div>
+	</div>
+
+	<div class="panel" title="ΠΡΟΣΦΟΡΕΣ" data-nav="nav_0" id="page_1" data-appbuilder-object="page">
+		<div class="container" style="width:100%" data-appbuilder-object="container" id="prosfores" data-position="static">		
+		<form style="width: 100%;min-height: 50px;" data-appbuilder-object="form" data-position="static" class="">
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+			<label>ΕΠΙΛΟΓΗ </label>
+			<select >
+			<option value=''>AYTOMATO</option>		
+			<option value='WISHLIST'>WISHLIST</option>
+			<option value='POPULAR'>ΔΗΜΟΦΙΛΕΣΤΕΡΕΣ</option>			
+			<option value='ALL'>ΟΛΕΣ</option>
+			<option value='CHOSEN'>ΕΠΙΛΕΓΜΕΝΕΣ</option>
+			<option value='REJECTED'>ΑΠΟΡΡΙΦΘΗΣΕΣ</option>				
+			</select>		
+			</div>			
+
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+				<label>ΚΑΤΗΓΟΡΙΑ </label>
+					<select id="prosforeskatigories">
+
+					</select>
+				</label>
+			</div>			
+			<div class="input_element form_element" style="width:100%;overflow:hidden" data-appbuilder-object="input">
+			<label>ΑΠΟΣΤΑΣΗ </label>
+			<input type=range min=0 max=100 value=50 id=fader step=1 oninput="outputUpdate(value)">
+			<output for=fader id=volume>KM: 50</output>
+			<script>function outputUpdate(vol) {document.querySelector('#volume').value = 'KM: '+vol;}</script>
+			</div>	
+		</form>
+		<ul class='list' data-appbuilder-object='list' id="epixeiseisprosfores" data-position='static'>
+		</ul>
+		</div>
+	</div>
+	
+	<div class="panel" title="ΑΠΟΔΕΙΞΕΙΣ" data-nav="nav_0" id="page_2" data-appbuilder-object="page">
+		<div class="container" style="width:100%" data-appbuilder-object="container" id="apodeikseis" data-position="static">
+	
+		<ul class='list' data-appbuilder-object='list' id="katanalotesapodeikseis" data-position='static'>
+		</ul>
+		</div>
+	</div>	
+	<div class="panel" title="ΠΡΟΣΦΟΡΑ" data-nav="nav_0"  name="prosfora" data-appbuilder-object="page">
+		<div class="container" style="width:100%" data-appbuilder-object="container" id="epixeiseisprosfora" data-position="static">
+
+		</div>
+		<a class="button" href="#" style="background-color: #5ECC1D;"  data-appbuilder-object="button" data-position="static" data-transition="slide" name="prosfora" onclick="return send_prosfora_choose(this.id);" >ΑΓΟΡΑΖΩ</a>
+		<a class="button" href="#" href="#" style="background-color: #FFBF0F;"  data-appbuilder-object="button" data-position="static" data-transition="slide" name="prosfora" onclick="return send_prosfora_wishlist(this.id);">WISHLIST</a>
+		<a class="button" href="#" style="background-color: #FF4D4F;"  data-appbuilder-object="button" data-position="static" data-transition="slide" name="prosfora" onclick="return send_prosfora_reject(this.id);">ΑΠΟΡΡΙΠΤΩ</a>
+		<br>
+		<a class="button" style="background-color: #3b5998;"  data-appbuilder-object="button " data-position="static" data-transition="slide" name="prosfora" onclick="return send_prosfora_wishlist(this.id);">FACEBOOK</a>
+		<a class="button" style="background-color: #4099FF;"  data-appbuilder-object="button " data-position="static" data-transition="slide" name="prosfora" onclick="return send_prosfora_wishlist(this.id);">TWITTER</a>
+
+		
+	</div>		
+
+
+	<div class="panel" title="ΣΤΑΤΙΣΤΙΚΑ" data-nav="nav_0" data-appbuilder-object="page" id="statistika-lista">
+
+		<div id="deikse-statistika-lista" style="margin-top:20px;">
+			<h2>Έξοδα</h2>
+			<ul class="list" data-appbuilder-object="list" data-position="static">
+			<li><a href="#statistika" onclick="return receive_eksodaepixeirisi_data();">ΕΞΟΔΑ ΑΝΑ ΕΠΙΧΕΙΡΗΣΗ </a></li>
+			<li><a href="#statistika"onclick="return receive_eksodakatigoria_data();">ΕΞΟΔΑ ΑΝΑ ΚΑΤΗΓΟΡΙΑ</a></li>
+			<li><a href="#statistika"onclick="return receive_eksodamina_data();">ΕΞΟΔΑ ΑΝΑ ΜΗΝΑ</a></li>
+			</ul>
+			<h2>Κέρδος</h2>
+			<ul class="list" data-appbuilder-object="list" data-position="static">
+			<li><a href="#statistika" onclick="return receive_kerdosepixeirisi_data();">ΚΕΡΔΟΣ ΑΝΑ ΕΠΙΧΕΙΡΗΣΗ </a></li>
+			<li><a href="#statistika"onclick="return receive_kerdoskatigoria_data();">ΚΕΡΔΟΣ ΑΝΑ ΚΑΤΗΓΟΡΙΑ</a></li>
+			<li><a href="#statistika"onclick="return receive_kerdosmina_data();">ΚΕΡΔΟΣ ΑΝΑ ΜΗΝΑ</a></li>
+			</ul>
+			<h2>Σύνολο</h2>
+			<ul class="list" data-appbuilder-object="list" data-position="static">
+			<li><a href="#statistika" onclick="return receive_synoloepixeirisi_data();">ΣΥΝΟΛΟ ΑΝΑ ΕΠΙΧΕΙΡΗΣΗ </a></li>
+			<li><a href="#statistika"onclick="return receive_synolokatigoria_data();">ΣΥΝΟΛΟ ΑΝΑ ΚΑΤΗΓΟΡΙΑ</a></li>
+			<li><a href="#statistika"onclick="return receive_synolomina_data();">ΣΥΝΟΛΟ ΑΝΑ ΜΗΝΑ</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="panel" title="ΣΤΑΤΙΣΤΙΚΑ" data-nav="nav_0" data-appbuilder-object="page" id="statistika">
+
+		<div id="deikse_statistika" style="margin-top:20px;">
+
+		</div>
+	</div>	
+
+	<div class="panel" title="ΒΡΑΒΕΙΑ" data-nav="nav_0" data-appbuilder-object="page" id="vraveia">
+
+		<div id="deikse_vraveia" style="">
+			
+		</div>
+		<div id="deikse_protous" style="">
+			
+		</div>		
+		
+	</div>		
+	
+ 
+</div>  
+       
+<div id="navbar">
+		 <a href="#page_2" class="icon paper" onclick="return receive_apodeikseis_data(); " class="">ΑΠΟΔΕΙΞΕΙΣ</a>
+	     <a href="#page_0" class="icon home">ΑΡΧΙΚΗ</a>
+		 <a href="#page_1" class="icon lamp" onclick="return receive_prosfores_data(); " class="">ΠΡΟΣΦΟΡΕΣ<span class="af-badge">4</span></a>
+</div>
+        
+<header id="header_0" data-appbuilder-object="header">
+	     <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
+	<h1 id="pageTitle" class="">
+		test
+	</h1>
+	     
+</header>
+<nav id="nav_0" data-appbuilder-object="nav">
+	     
+
+	<div id="user_details">
+	<div id='badge'></div>
+	<div id='onoma'></div>
+	<div id='eponymo'></div>
+	<img src="img/ribbon.png" class="pontoi-ribbon" />
+	<div id='pontoi'></div>
+	</div>
+	<br>
+	<div>
+
+			<ul class="list" data-appbuilder-object="list" data-position="static">
+			<li><a class="icon graph" href="#statistika-lista" >ΣΤΑΤΙΣΤΙΚΑ</a></li>
+			<li><a class="icon star" href="#vraveia">ΒΡΑΒΕΙΑ</a></li>
+			<li><a class="icon settings" href="#">ΡΥΘΜΙΣΕΙΣ</a></li>
+			<li><a class="icon info" href="#">ΒΟΗΘΕΙΑ</a></li>
+			</ul>
+	</div>
+	
+</nav>
+        </div>
+    </body>
+</html>
